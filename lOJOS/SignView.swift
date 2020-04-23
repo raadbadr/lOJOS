@@ -6,4 +6,17 @@
 //  Copyright © 2020 RAAD BADR. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
+import AuthenticationServices
+
+struct LogView: View {
+    var body: some View
+    {
+        Text("Hi")
+    }
+    
+}
+
+struct <#name#> {
+    <#fields#>
+}
