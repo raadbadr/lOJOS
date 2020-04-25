@@ -9,35 +9,95 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var show = false
+    @State var viewState = CGSize.zero
+    @State var showCard = false
+    
     var body: some View
     {
         ZStack
         {
+            //this for title
             TitleView()
+                .blur(radius: show ? 20 : 0)
+                .opacity(showCard ? 0.4 : 1)
+                .offset(y: showCard ? -200 : 0)
+                .animation(
+                    Animation
+                        .default
+                        .delay(0.1)
+//                        .speed(2)
+//                        .repeatCount(3, autoreverses: false)
+                )
+                
             
+            //the third card
             BackCardView()
-                .background(Color("card3"))
+                .frame(width: showCard ? 300 : 340, height: 220)
+                .background(show ? Color("card3") : Color("card4"))
                 .cornerRadius(25)
                 .shadow(radius: 20)
-                .offset(x: 0, y: -40)
-                .scaleEffect(0.9)
-                .rotationEffect(Angle(degrees: 10))
-                .rotation3DEffect(Angle(degrees: 10), axis: (x: 10.0, y: 0, z: 0))
-//                .blendMode(.hardLight)
+                .offset(x: 0, y: show ? -400 : -40)
+                .offset(x: viewState.width, y:viewState.height)
+                .offset(y: showCard ? -180 : 0)
+                .scaleEffect(showCard ? 1 : 0.0)
+                //show if true = 0 if false = 5
+                .rotationEffect(Angle.degrees(show ? 0 : 10))
+                .rotationEffect(Angle.degrees(showCard ? -10 : 0))
+                .rotation3DEffect(Angle(degrees: showCard ? 0 : 10), axis: (x: 10.0, y: 0, z: 0))
+                .blendMode(.hardLight)
+                .animation(.easeInOut(duration: 0.5))
             
+            //the second card
             BackCardView()
-                .background(Color("card1"))
+                .frame(width: 340, height: 220)
+                .background(show ? Color("card4") : Color("card3"))
                 .cornerRadius(25)
                 .shadow(radius: 20)
-                .offset(x: 0, y: -20)
-                .scaleEffect(0.95)
-                .rotationEffect(Angle(degrees: 5))
-                .rotation3DEffect(Angle(degrees: 5), axis: (x: 10.0, y: 0, z: 0))
-//                .blendMode(.hue)
+                .offset(x: 0, y: show ? -200 : -20)
+                .offset(y: showCard ? -140 : 0)
+                .offset(x: viewState.width, y:viewState.height)
+                .scaleEffect(showCard ? 1 : 0.95)
+                .rotationEffect(Angle.degrees(show ? 0 : 5))
+                .rotationEffect(Angle.degrees(showCard ? -5 : 0))
+                .rotation3DEffect(Angle(degrees: showCard ? 0 : 5), axis: (x: 10.0, y: 0, z: 0))
+                .blendMode(.hardLight)
+                .animation(.easeInOut(duration: 0.3))
            
-            
+            //the front card
+           
             CardView()
-            .blendMode(.hue)
+                .frame(width: showCard ? 370 : 340, height: 220)
+                .background(Color.orange)
+//                .cornerRadius(25)
+                .clipShape(RoundedRectangle(cornerRadius: showCard ? 30 : 20, style: .continuous))
+                .shadow(radius: 20)
+                .offset(x: viewState.width, y:viewState.height)
+                .offset(y: showCard ? -100 : 0)
+                //.blendMode(.hardLight)
+                .animation(.spring(response: 0.4, dampingFraction: 0.6, blendDuration: 0.5))
+                .onTapGesture {
+                self.showCard.toggle()
+            }
+            
+            .gesture(
+                DragGesture().onChanged{ value in
+                    self.viewState = value.translation
+                    self.show = true
+                    
+                }
+                .onEnded { value in
+                    self.viewState = .zero
+                    self.show = false
+                }
+            )
+            
+            //the bottom information
+            BottomCardView()
+                .offset(x: 0, y: showCard ? 360 : 1000)
+                .blur(radius: show ? 20 : 0)
+                .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
         }
         
         
@@ -76,16 +136,13 @@ struct CardView: View {
             .padding(.horizontal, 20)
             .padding(.top, 50)
             Spacer()
-            Image("Card1")
+            Image("Card3")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 300, height:110, alignment: .top)
             
         }
-        .frame(width: 340, height: 220)
-        .background(Color.blue)
-        .cornerRadius(25)
-        .shadow(radius: 20)
+        
     }
 }
 
@@ -94,7 +151,7 @@ struct BackCardView: View {
         VStack{
             Spacer()
         }
-        .frame(width: 340, height: 220)
+        
         
         
     }
@@ -108,6 +165,7 @@ struct TitleView: View {
                 Text("Shippment Type")
                     .font(.largeTitle)
                     .fontWeight(.bold)
+                    .font(.headline)
                 
                 Spacer()
             }
@@ -115,5 +173,31 @@ struct TitleView: View {
             Image("Background1")
             Spacer()
         }
+    }
+}
+
+struct BottomCardView: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            
+            Rectangle()
+                .frame(width: 40, height: 5)
+                .cornerRadius(3)
+                .opacity(0.2)
+            Text("Shippemnt types are 3 types Ocean Land and Air")
+                .multilineTextAlignment(.center)
+                .font(.subheadline)
+                .lineSpacing(4)
+            
+            Spacer()
+            
+        }
+        .padding(.top, 8)
+        .padding(.horizontal, 20)
+        .frame(maxWidth: .infinity)
+        .background(Color.white)
+        .cornerRadius(30)
+        .shadow(radius: 20)
+       
     }
 }
