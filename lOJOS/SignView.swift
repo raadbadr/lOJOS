@@ -8,15 +8,37 @@
 
 import SwiftUI
 import AuthenticationServices
+import Lottie
 
-struct LogView: View {
-    var body: some View
-    {
-        Text("Hi")
+
+
+struct SignView : View {
+    var body: some View {
+         
+        NavigationView {
+            VStack
+                {
+                    
+                    NavigationLink(destination: ContentView() ) {
+                    Text("Go To Main Menu")
+
+            }
+            
+            
+                 
+            
+            }
+            
+            
+
+        }
+        
     }
-    
+
 }
 
-struct <#name#> {
-    <#fields#>
+struct SignView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignView()
+    }
 }
