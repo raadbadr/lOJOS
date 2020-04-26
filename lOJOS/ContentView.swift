@@ -159,10 +159,11 @@ struct CardView: View {
                 VStack(alignment: .leading){
                     Text("Import")
                         .font(.title)
+                        .foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
                     Text("Ocean")
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
                         .multilineTextAlignment(.center)
                 }
                 Spacer()
