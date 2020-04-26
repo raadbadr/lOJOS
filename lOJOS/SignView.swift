@@ -14,27 +14,21 @@ import Lottie
 
 struct SignView : View {
     var body: some View {
-         
+        
         NavigationView {
             VStack
                 {
                     
                     NavigationLink(destination: ContentView() ) {
-                    Text("Go To Main Menu")
-
+                        Text("Go To Main Menu")
+                    }
+                    
             }
-            
-            
-                 
-            
-            }
-            
-            
-
+   
         }
         
     }
-
+    
 }
 
 struct SignView_Previews: PreviewProvider {

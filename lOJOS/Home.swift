@@ -21,7 +21,7 @@ struct Home: View {
             Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1))
                 .edgesIgnoringSafeArea(.all)
             
-             HomeView(showProfile: $showProfile)
+            HomeView(showProfile: $showProfile)
                 .padding(.top, 44)
                 .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
@@ -32,26 +32,26 @@ struct Home: View {
                 .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
                 .edgesIgnoringSafeArea(.all)
             
-         MenuView()
-            .background(Color(#colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)).opacity(0.001))
-            .offset(y: showProfile ? 0 : screen.height)
-            .offset(y: viewState.height)
-            .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
-            .onTapGesture {
-                self.showProfile.toggle()
+            MenuView()
+                .background(Color(#colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)).opacity(0.001))
+                .offset(y: showProfile ? 0 : screen.height)
+                .offset(y: viewState.height)
+                .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
+                .onTapGesture {
+                    self.showProfile.toggle()
             }
-        .gesture(
-            DragGesture().onChanged { value in
-                self.viewState = value.translation
-            }
-            .onEnded { value in
-                
-                if self.viewState.height > 50 {
-                    self.showProfile = false
+            .gesture(
+                DragGesture().onChanged { value in
+                    self.viewState = value.translation
                 }
-                
-                self.viewState = .zero
-            }
+                .onEnded { value in
+                    
+                    if self.viewState.height > 50 {
+                        self.showProfile = false
+                    }
+                    
+                    self.viewState = .zero
+                }
             )
         }
     }
