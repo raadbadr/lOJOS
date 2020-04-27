@@ -16,8 +16,12 @@ struct UpdateList: View {
     }
     
     var body: some View {
+       
+        
         NavigationView {
+            
             List {
+                
                 ForEach(store.updates) { update in
                     NavigationLink(destination: UpdateDetail(update: update)) {
                         HStack {
@@ -47,7 +51,7 @@ struct UpdateList: View {
                             }
                         }
                         .padding(.vertical, 8)
-                        
+                    
                     }
                 }
                 .onDelete { index in
@@ -57,11 +61,21 @@ struct UpdateList: View {
                     self.store.updates.move(fromOffsets: source, toOffset: destination)
                 }
             }
-            .navigationBarTitle(Text("Updates"))
-            .navigationBarItems(leading: Button(action: addUpdate) {
-                Text("Add Update")
-            }, trailing: EditButton())
+            
+                .navigationBarTitle(Text("Updates"))
+                
+                .navigationBarItems(leading: Button(action: addUpdate) {
+                    Text("Add Update")
+                    
+//                    Rectangle()
+//                    .frame(width: 40, height: 5)
+//                    .cornerRadius(3)
+//                    .opacity(0.5)
+                    
+                    
+                }, trailing: EditButton())
         }
+       
     }
 }
 

@@ -11,67 +11,94 @@ import SwiftUI
 struct HomeView: View {
     @Binding var showProfile: Bool
     @State var showUpdate = false
+    @Binding var showContent: Bool
     
     var body: some View {
-        VStack {
-            HStack {
-                Text("Main Menu")
-                    .font(.system(size: 26, weight: .bold))
-                
-                Spacer()
-                
-                AvatarView(showProfile: $showProfile)
-                
-                Button(action: {self.showUpdate.toggle() }) {
+        ScrollView {
+            VStack {
+                HStack {
+                    Text("Main Menu")
+                        .font(.system(size: 26, weight: .bold))
+    //                    .modifier(CustomFontModifier(size: 28))
                     
-                    Image(systemName: "bell")
-                        .renderingMode(.original)
-                        .font(.system(size: 16, weight: .medium))
-                        .frame(width: 36, height: 36)
-                        .background(Color.white)
-                        .clipShape(Circle())
-                        .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
-                        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+                    Spacer()
                     
-                }
-                .sheet(isPresented: $showUpdate) {
-                    UpdateList()
-                }
-            }
-            .padding(.horizontal)
-            .padding(.leading, 14)
-            .padding(.top, 30)
-            
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    ForEach(sectionData) { item in
-                        GeometryReader { geometry in
-                            SectionView(section: item)
-                                .rotation3DEffect(Angle(degrees:
-                                    Double(geometry.frame(in: .global).minX - 30) / -20
-                                ), axis: (x: 0, y: 10.0, z: 0))
-                        }
-                        .frame(width: 275, height: 275)
+                    AvatarView(showProfile: $showProfile)
+                    
+                    Button(action: {self.showUpdate.toggle() }) {
+                        
+                        Image(systemName: "bell")
+                            .renderingMode(.original)
+                            .font(.system(size: 16, weight: .medium))
+                            .frame(width: 36, height: 36)
+                            .background(Color.white)
+                            .clipShape(Circle())
+                            .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+                        
+                    }
+                    .sheet(isPresented: $showUpdate) {
+                        UpdateList()
                     }
                 }
+                .padding(.horizontal)
+                .padding(.leading, 14)
+                .padding(.top, 30)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    WatchRingsView()
+                        .padding(.horizontal, 30)
+                        .padding(.bottom, 30)
+                        .onTapGesture {
+                            self.showContent = true
+                    }
                     
-                .padding(30)
-                .padding(.bottom, 30)
+                }
+                
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(sectionData) { item in
+                            GeometryReader { geometry in
+                                SectionView(section: item)
+                                    .rotation3DEffect(Angle(degrees:
+                                        Double(geometry.frame(in: .global).minX - 30) / -20
+                                    ), axis: (x: 0, y: 10.0, z: 0))
+                            }
+                            .frame(width: 275, height: 275)
+                        }
+                    }
+                        
+                    .padding(30)
+                    .padding(.bottom, 30)
+                }
+                .offset(y: -30)
+                HStack {
+                    Text("Shipments")
+                        .font(.title).bold()
+                    Spacer()
+                }
+                .padding(.leading, 30)
+                .offset(y: -60)
+                
+                SectionView(section: sectionData[2], width: screen.width - 60, height: 275)
+                .offset(y: -60)
+                Spacer()
             }
-            Spacer()
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(showProfile: .constant(false))
+        HomeView(showProfile: .constant(false), showContent: .constant(false) )
     }
 }
 
 struct SectionView: View {
     var section: Section
+    var width: CGFloat = 275
+    var height: CGFloat = 275
     
     var body: some View {
         VStack {
@@ -94,7 +121,7 @@ struct SectionView: View {
         }
         .padding(.top, 20)
         .padding(.horizontal, 20)
-        .frame(width: 275, height: 275)
+        .frame(width: width, height: height)
         .background(section.color)
         .cornerRadius(30)
         .shadow(color: section.color.opacity(0.3), radius: 20, x: 0, y: 20)
@@ -119,3 +146,51 @@ let sectionData = [
 ]
 
 
+
+struct WatchRingsView: View {
+    var body: some View {
+        HStack(spacing: 20) {
+            HStack(alignment: .center, spacing: 12.0) {
+                RingView(color1: #colorLiteral(red: 0.1764705926, green: 0.01176470611, blue: 0.5607843399, alpha: 1), color2: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), width: 50, height: 50, percent: 69, show: .constant(true))
+                VStack(alignment: .center, spacing: 4) {
+                    Text("16 Days Left")
+                        .bold()
+                        .modifier(FontModifier(style: .subheadline))
+                    Text("Payment 2500$! Done")
+                    .bold()
+                        .modifier(FontModifier(style: .caption))
+                        .foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+                    Text("SABER NEEDED!")
+                        .modifier(FontModifier(style: .caption))
+                        .foregroundColor(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)))
+                }
+                .modifier(FontModifier())
+            }
+            .padding(8)
+            .background(Color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)))
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+            HStack(spacing: 12.0) {
+                RingView(color1: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), color2: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), width: 40, height: 40, percent: 50, show: .constant(true))
+                    
+                    .modifier(FontModifier())
+            }
+            .padding(8)
+            .background(Color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)))
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+            HStack(spacing: 12.0) {
+                RingView(color1: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), color2: #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1), width: 40, height: 40, percent: 30, show: .constant(true))
+                    
+                    .modifier(FontModifier())
+            }
+            .padding(8)
+            .background(Color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)))
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+        }
+    }
+}

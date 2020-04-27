@@ -14,6 +14,7 @@ let screen = UIScreen.main.bounds
 struct Home: View {
     @State var showProfile = false
     @State var viewState = CGSize.zero
+    @State var showContent = false
     
     var body: some View {
         ZStack {
@@ -21,9 +22,17 @@ struct Home: View {
             Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1))
                 .edgesIgnoringSafeArea(.all)
             
-            HomeView(showProfile: $showProfile)
+            HomeView(showProfile: $showProfile, showContent: $showContent)
                 .padding(.top, 44)
-                .background(Color.white)
+                .background(
+                    VStack {
+                        
+                        LinearGradient(gradient: Gradient(colors: [Color("background2"), Color.white]), startPoint: .top, endPoint: .bottom)
+                            .frame(height: 200)
+                        Spacer()
+                    }
+                    .background(Color.white)
+            )
                 .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
                 .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)).opacity(0.2), radius: 20, x: 0, y: 20)
                 .offset(y: showProfile ? -450 : 0)
@@ -53,6 +62,31 @@ struct Home: View {
                     self.viewState = .zero
                 }
             )
+            
+            if showContent {
+                Color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)).edgesIgnoringSafeArea(.all)
+                ShipmentView()
+                VStack {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "xmark")
+                        .frame(width: 36, height: 36)
+                        .foregroundColor(.white)
+                        .background(Color.black)
+                            .clipShape(Circle())
+                    }
+                    Spacer()
+                }
+                .offset(x: -16, y:16)
+                .transition(.move(edge: .top))
+                .animation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0))
+                .onTapGesture {
+                    self.showContent = false
+                }
+
+                
+            }
+            
         }
     }
 }

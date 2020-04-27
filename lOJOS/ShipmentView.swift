@@ -100,7 +100,7 @@ struct ShipmentView: View {
                 //            Text("\(bottomState.height)")
                 //                .offset(y: -300)
                 
-                BottomCardView()
+                BottomCardView(show: $showCard)
                     .offset(x: 0, y: showCard ? 360 : 1000)
                     .offset(y: bottomState.height)
                     .blur(radius: show ? 20 : 0)
@@ -209,6 +209,8 @@ struct TitleView: View {
 }
 
 struct BottomCardView: View {
+    @Binding var show: Bool
+    
     var body: some View {
         VStack(spacing: 20) {
             
@@ -216,11 +218,30 @@ struct BottomCardView: View {
                 .frame(width: 40, height: 5)
                 .cornerRadius(3)
                 .opacity(0.2)
+            
             Text("Shippemnt types are 3 types Ocean Land and Air")
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
                 .lineSpacing(4)
-            
+           
+            //can be change to VStack
+            HStack(spacing: 20.0) {
+                RingView(color1: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), color2: #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1), width: 100, height: 100, percent: 69, show: $show)
+                    .animation(Animation.easeInOut.delay(0.3))
+                
+                VStack(alignment: .leading, spacing: 8.0) {
+                    Text("SwiftUI").fontWeight(.bold)
+                    Text("12 of 12 sections completed")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+                    .lineSpacing(4)
+                }
+            .padding(20)
+            .background(Color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)))
+            .cornerRadius(20)
+                .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)).opacity(0.2), radius: 20, x: 0, y: 10)
+                
+            }
             Spacer()
             
         }
