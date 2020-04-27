@@ -12,14 +12,14 @@ import Lottie
 
 
 
-struct SignView : View {
+struct SignView: View {
     var body: some View {
         
         NavigationView {
             VStack
                 {
                     
-                    NavigationLink(destination: ContentView() ) {
+                    NavigationLink(destination: ShipmentView()) {
                         Text("Go To Main Menu")
                     }
                     

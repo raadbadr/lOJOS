@@ -71,7 +71,7 @@ struct AvatarView: View {
             Image("Eng.Raad")
                 .renderingMode(.original)
                 .resizable()
-                .frame(width: 69, height: 69)
+                .frame(width: 50, height: 69)
                 .clipShape(Circle())
         }
     }

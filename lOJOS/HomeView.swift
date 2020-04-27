@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Binding var showProfile : Bool
+    @Binding var showProfile: Bool
     @State var showUpdate = false
     
     var body: some View {
         VStack {
             HStack {
-                Text("Watching")
+                Text("Main Menu")
                     .font(.system(size: 26, weight: .bold))
                 
                 Spacer()

@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ShipmentView: View {
     
     @State var show = false
     @State var viewState = CGSize.zero
@@ -142,7 +142,7 @@ struct ContentView_Previews: PreviewProvider
 {
     static var previews: some View
     {
-        ContentView()
+        ShipmentView()
     }
 }
 
@@ -194,7 +194,7 @@ struct TitleView: View {
         VStack{
             
             HStack{
-                Text("Shippment Type")
+                Text("Shipment Type")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .font(.headline)
