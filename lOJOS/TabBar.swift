@@ -19,6 +19,10 @@ struct TabBar: View {
                 Image(systemName: "square.stack.fill")
                 Text("Shipment Type")
             }
+            CourseList().tabItem {
+                Image(systemName: "square.stack.fill")
+                Text("Your Shipment")
+            }
         }
             
 //        .edgesIgnoringSafeArea(.top)
