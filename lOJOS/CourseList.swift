@@ -145,7 +145,7 @@ struct CourseView: View {
                 .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? 460 : 280)
                 .background(Color(course.color))
                 .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-                .shadow(color: Color(course.color).opacity(0.3), radius: 20, x: 0, y: 20)
+                .shadow(color: Color(course.color).opacity(0.3), radius: 50, x: 0, y: 20)
                 
             .gesture(
                 show ?
@@ -179,6 +179,12 @@ struct CourseView: View {
                     else {
                         self.activeIndex = -1
                     }
+            }
+            
+            if show {
+//                CourseDetail(course: course, show: $show, active: $active, activeIndex: $activeIndex)
+//                .background(Color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)))
+//                .animation(nil)
             }
             
         }

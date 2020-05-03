@@ -14,12 +14,13 @@ struct RingView: View {
     var color2 = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
     var width: CGFloat = 269
     var height: CGFloat = 269
-    var percent:CGFloat = 69
+    var percent:CGFloat = 50
     
     //to call from out side --> and look at line 57-58
     @Binding var show: Bool
     
     var body: some View {
+        
        
         let multiplier = width / 44
         let progress = 1 - (percent / 100)
