@@ -19,7 +19,7 @@ struct HomeView: View {
                 HStack {
                     Text("Main Menu")
                         .font(.system(size: 26, weight: .bold))
-    //                    .modifier(CustomFontModifier(size: 28))
+                    //                    .modifier(CustomFontModifier(size: 28))
                     
                     Spacer()
                     
@@ -82,7 +82,7 @@ struct HomeView: View {
                 .offset(y: -60)
                 
                 SectionView(section: sectionData[2], width: screen.width - 60, height: 275)
-                .offset(y: -60)
+                    .offset(y: -60)
                 Spacer()
             }
         }
@@ -157,7 +157,7 @@ struct WatchRingsView: View {
                         .bold()
                         .modifier(FontModifier(style: .subheadline))
                     Text("Payment 2500$! Done")
-                    .bold()
+                        .bold()
                         .modifier(FontModifier(style: .caption))
                         .foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
                     Text("SABER NEEDED!")

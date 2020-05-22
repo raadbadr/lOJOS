@@ -45,7 +45,7 @@ struct MenuView: View {
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)).opacity(0.2), radius: 20, x: 0, y: 20)
             .padding(.horizontal, 30)
-        
+                
             .overlay(
                 Image("Eng.Raad")
                     .resizable()
@@ -54,7 +54,7 @@ struct MenuView: View {
                     .clipShape(Circle())
                     .shadow(radius: 20)
                     .offset(y: -169)
-                )
+            )
             
         }
         .padding(.bottom, 30)
@@ -64,7 +64,7 @@ struct MenuView: View {
 struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
         MenuView()
-            
+        
     }
 }
 

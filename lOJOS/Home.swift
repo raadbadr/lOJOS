@@ -70,9 +70,9 @@ struct Home: View {
                     HStack {
                         Spacer()
                         Image(systemName: "xmark")
-                        .frame(width: 36, height: 36)
-                        .foregroundColor(.white)
-                        .background(Color.black)
+                            .frame(width: 36, height: 36)
+                            .foregroundColor(.white)
+                            .background(Color.black)
                             .clipShape(Circle())
                     }
                     Spacer()
@@ -83,7 +83,7 @@ struct Home: View {
                 .onTapGesture {
                     self.showContent = false
                 }
-
+                
                 
             }
             
