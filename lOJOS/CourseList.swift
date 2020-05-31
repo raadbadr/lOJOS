@@ -7,9 +7,10 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct CourseList: View {
-    @State var  courses = courseData
+    @ObservedObject var store = CourseStore()
     @State var active = false
     @State var activeIndex = -1
     @State var activeView = CGSize.zero
@@ -20,6 +21,8 @@ struct CourseList: View {
             Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)).opacity(Double(self.activeView.height / 500))
                 .animation(.linear)
                 .edgesIgnoringSafeArea(.all)
+            
+            
             ScrollView {
                 VStack(spacing: 30) {
                     Text("Shipments Types")
@@ -30,18 +33,18 @@ struct CourseList: View {
                         .padding(.top, 30)
                         .blur(radius: active ? 20 : 0)
                     
-                    ForEach(courses.indices, id: \.self) { index in
+                    ForEach(store.courses.indices, id: \.self) { index in
                         GeometryReader { geometry in
                             CourseView(
-                                show: self.$courses[index].show,
-                                course: self.courses[index],
+                                show: self.$store.courses[index].show,
+                                course: self.store.courses[index],
                                 active: self.$active,
                                 index: index,
                                 activeIndex: self.$activeIndex,
                                 activeView: self.$activeView
                             )
                                 
-                                .offset(y: self.courses[index].show ? -geometry.frame(in: .global).minY : 0)
+                                .offset(y: self.store.courses[index].show ? -geometry.frame(in: .global).minY : 0)
                                 .opacity(self.activeIndex != index && self.active ? 0 : 1)
                                 .scaleEffect(self.activeIndex != index && self.active ? 0.5 : 1)
                                 .offset(x: self.activeIndex != index && self.active ? screen.width : 0)
@@ -50,8 +53,8 @@ struct CourseList: View {
                             //                    .frame(height: self.courses[index].show ? screen.height : 280)
                             
                             .frame(height: 280)
-                            .frame(maxWidth: self.courses[index].show ? .infinity : screen.width - 60)
-                            .zIndex(self.courses[index].show ? 1 : 0)
+                            .frame(maxWidth: self.store.courses[index].show ? .infinity : screen.width - 60)
+                            .zIndex(self.store.courses[index].show ? 1 : 0)
                         
                         
                     }
@@ -131,7 +134,7 @@ struct CourseView: View {
                 }
                 
                 Spacer()
-                Image(uiImage: course.image)
+                WebImage(url: course.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: .infinity)
@@ -227,7 +230,7 @@ struct Course: Identifiable {
     var id = UUID()
     var title: String
     var subtitle: String
-    var image: UIImage
+    var image: URL
     var logo: UIImage
     var color: UIColor
     var show: Bool
@@ -235,7 +238,7 @@ struct Course: Identifiable {
 
 
 var courseData = [
-    Course(title: "Shipment FOB", subtitle: "18 Ports", image: #imageLiteral(resourceName: "Background1"), logo: #imageLiteral(resourceName: "Logo1"), color: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), show: false),
-    Course(title: "Shipment DTD", subtitle: "120 Ports", image: #imageLiteral(resourceName: "Card3"), logo: #imageLiteral(resourceName: "Logo1"), color: #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1), show: false),
-    Course(title: "Shipment Ex Work", subtitle: "50 Ports", image: #imageLiteral(resourceName: "Card4"), logo: #imageLiteral(resourceName: "Logo1"), color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1), show: false)
+    Course(title: "Shipment FOB", subtitle: "18 Ports", image: URL(string: "https://thundermoonstd.com/imgs/logo.png")!, logo: #imageLiteral(resourceName: "Logo1"), color: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), show: false),
+    Course(title: "Shipment DTD", subtitle: "120 Ports", image: URL(string: "https://thundermoonstd.com/imgs/logo.png")!, logo: #imageLiteral(resourceName: "Logo1"), color: #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1), show: false),
+    Course(title: "Shipment Ex Work", subtitle: "50 Ports", image: URL(string: "https://thundermoonstd.com/imgs/logo.png")!, logo: #imageLiteral(resourceName: "Logo1"), color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1), show: false)
 ]
